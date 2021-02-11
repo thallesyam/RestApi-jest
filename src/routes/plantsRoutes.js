@@ -1,10 +1,10 @@
 const express = require('express')
 
 const router = express.Router()
-const plantsData = require('../service/plantsService')
+const plantsService = require('../service/plantsService')
 
 router.get('/plants', async (req, res) => {
-   const plants = await plantsData.getPlants()
+   const plants = await plantsService.getPlants()
 
    return res.json(plants)
 })

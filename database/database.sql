@@ -12,13 +12,14 @@ create table plants.plants (
   date timestamp default now()
 )
 
-create schema shower
+create schema baths
 
-create table shower.shower (
+create table baths.baths (
   id serial PRIMARY KEY,
   name text not null,
   contact text not null,
   image text not null,
+  nameBath text not null,
   herbs text[] not null,
   atuation text,
   quantity integer not null,
