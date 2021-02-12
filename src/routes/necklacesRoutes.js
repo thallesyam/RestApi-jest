@@ -22,7 +22,9 @@ router.post('/necklaces', async (req, res) => {
 })
 
 router.put('/necklaces/:id', async (req, res) => {
-
+   const necklace = req.body
+   await necklacesService.updateNecklace(req.params.id, necklace)
+   res.end()
 })
 
 router.delete('/necklaces/:id', async (req, res) => {

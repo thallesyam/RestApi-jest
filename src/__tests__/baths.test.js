@@ -3,7 +3,7 @@ const bathsService = require('../service/bathsService')
 const request = require('../utils/request')
 const generate = require('../utils/generate')
 
-test("Should get posts", async function () {
+test("Should get baths", async function () {
   const baths1 = await bathsService.saveBath({ 
     name: generate(),
     contact: generate(),
@@ -47,7 +47,7 @@ test("Should get posts", async function () {
 
 } )
 
-test("Should save posts", async function () {
+test("Should save baths", async function () {
   const data = {    
     name: generate(),
     contact: generate(),
@@ -65,6 +65,44 @@ test("Should save posts", async function () {
 
   expect(bath.title).toBe(data.title)
   expect(bath.content).toBe(data.content)
+
+  await bathsService.deleteBath(bath.id)
+
+} )
+
+test.only("Should update baths", async function () {
+  const bath = await bathsService.saveBath({ 
+    name: generate(),
+    contact: generate(),
+    image: generate(),
+    namebath: generate(),
+    herbs: [generate()],
+    atuation: generate(),
+    quantity: 5,
+    price: generate(),
+  })
+
+  bath.name = generate()
+  bath.contact = generate()
+  bath.image = generate()
+  bath.namebath = generate()
+  bath.herbs = [generate()],
+  bath.atuation = generate(),
+  bath.quantity = 10
+  bath.price = generate()
+
+  await request(`http://localhost:3000/baths/${bath.id}`,'put', bath)
+
+  const updateBath = await bathsService.getBath(bath.id)
+
+  expect(updateBath.name).toBe(bath.name)
+  expect(updateBath.contact).toBe(bath.contact)
+  expect(updateBath.image).toBe(bath.image)
+  expect(updateBath.namebath).toBe(bath.namebath)
+  expect(updateBath.herbs).toStrictEqual(bath.herbs)
+  expect(updateBath.atuation).toBe(bath.atuation)
+  expect(updateBath.quantity).toBe(bath.quantity)
+  expect(updateBath.price).toBe(bath.price)
 
   await bathsService.deleteBath(bath.id)
 

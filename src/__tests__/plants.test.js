@@ -2,7 +2,7 @@ const plantsService = require('../service/plantsService')
 const request = require('../utils/request')
 const generate = require('../utils/generate')
 
-test("Should get posts", async function () {
+test("Should get plants", async function () {
   const plant1 = await plantsService.savePlant({ 
     name: generate(),
     contact: generate(),
@@ -44,7 +44,7 @@ test("Should get posts", async function () {
 } )
 
 
-test("Should save posts", async function () {
+test("Should save plants", async function () {
   const data = {    
     name: generate(),
     contact: generate(),
@@ -61,6 +61,40 @@ test("Should save posts", async function () {
 
   expect(plant.title).toBe(data.title)
   expect(plant.content).toBe(data.content)
+
+  await plantsService.deletePlant(plant.id)
+
+} )
+
+test.only("Should update plants", async function () {
+  const plant = await plantsService.savePlant({ 
+    name: generate(),
+    contact: generate(),
+    image: generate(),
+    plantType: generate(),
+    description: generate(),
+    quantity: 5,
+    price: generate(),
+  })
+
+  plant.name = generate()
+  plant.contact = generate()
+  plant.image = generate()
+  plant.plantType = generate()
+  plant.description = generate()
+  plant.quantity = 10
+  plant.price = generate()
+
+  await request(`http://localhost:3000/plants/${plant.id}`,'put', plant)
+
+  const updatePlant = await plantsService.getPlant(plant.id)
+
+  expect(updatePlant.name).toBe(plant.name)
+  expect(updatePlant.contact).toBe(plant.contact)
+  expect(updatePlant.image).toBe(plant.image)
+  expect(updatePlant.planttype).toBe(plant.plantType)
+  expect(updatePlant.description).toBe(plant.description)
+  expect(updatePlant.price).toBe(plant.price)
 
   await plantsService.deletePlant(plant.id)
 

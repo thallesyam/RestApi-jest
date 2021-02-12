@@ -22,7 +22,9 @@ router.post('/baths', async (req, res) => {
 })
 
 router.put('/baths/:id', async (req, res) => {
-
+   const bath = req.body
+   await bathsService.updateBath(req.params.id, bath)
+   res.end()
 })
 
 router.delete('/baths/:id', async (req, res) => {

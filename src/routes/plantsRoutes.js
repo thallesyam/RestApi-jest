@@ -22,7 +22,9 @@ router.post('/plants', async (req, res) => {
 })
 
 router.put('/plants/:id', async (req, res) => {
-
+   const plant = req.body
+   await plantsService.updatePlant(req.params.id, plant)
+   res.end()
 })
 
 router.delete('/plants/:id', async (req, res) => {
