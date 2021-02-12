@@ -28,7 +28,8 @@ router.put('/plants/:id', async (req, res) => {
 })
 
 router.delete('/plants/:id', async (req, res) => {
-
+   await plantsService.deletePlant(req.params.id)
+   res.end()
 })
 
 

@@ -70,7 +70,7 @@ test("Should save baths", async function () {
 
 } )
 
-test.only("Should update baths", async function () {
+test("Should update baths", async function () {
   const bath = await bathsService.saveBath({ 
     name: generate(),
     contact: generate(),
@@ -105,5 +105,25 @@ test.only("Should update baths", async function () {
   expect(updateBath.price).toBe(bath.price)
 
   await bathsService.deleteBath(bath.id)
+
+} )
+
+test("Should delete baths", async function () {
+  const bath = await bathsService.saveBath({ 
+    name: generate(),
+    contact: generate(),
+    image: generate(),
+    namebath: generate(),
+    herbs: [generate()],
+    atuation: generate(),
+    quantity: 5,
+    price: generate(),
+  })
+
+  await request(`http://localhost:3000/baths/${bath.id}`,'delete')
+
+  const baths = await bathsService.getBaths()
+
+  expect(baths).toHaveLength(0)
 
 } )

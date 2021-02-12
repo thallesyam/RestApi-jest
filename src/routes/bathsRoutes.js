@@ -28,7 +28,8 @@ router.put('/baths/:id', async (req, res) => {
 })
 
 router.delete('/baths/:id', async (req, res) => {
-
+   await bathsService.deleteBath(req.params.id)
+   res.end()
 })
 
 

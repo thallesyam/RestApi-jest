@@ -58,7 +58,7 @@ test("Should save necklaces", async function () {
 
 } )
 
-test.only("Should update necklaces", async function () {
+test("Should update necklaces", async function () {
   const necklace = await necklacesService.saveNecklaces({ 
     name: generate(),
     contact: generate(),
@@ -84,5 +84,22 @@ test.only("Should update necklaces", async function () {
   expect(updateNecklace.price).toBe(necklace.price)
 
   await necklacesService.deleteNecklaces(necklace.id)
+
+} )
+
+test("Should delete baths", async function () {
+  const necklace = await necklacesService.saveNecklaces({ 
+    name: generate(),
+    contact: generate(),
+    image: generate(),
+    quantity: 5,
+    price: generate(),
+  })
+
+  await request(`http://localhost:3000/necklaces/${necklace.id}`,'delete')
+
+  const necklaces = await necklacesService.getNecklaces()
+
+  expect(necklaces).toHaveLength(0)
 
 } )

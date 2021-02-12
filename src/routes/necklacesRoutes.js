@@ -28,7 +28,8 @@ router.put('/necklaces/:id', async (req, res) => {
 })
 
 router.delete('/necklaces/:id', async (req, res) => {
-
+   await necklacesService.deleteNecklaces(req.params.id)
+   res.end()
 })
 
 
