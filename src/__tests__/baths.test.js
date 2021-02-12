@@ -1,10 +1,7 @@
-const crypto = require('crypto')
-const axios = require('axios')
 const bathsService = require('../service/bathsService')
 
-const generate = function () {
-  return crypto.randomBytes(20).toString('hex')
-}
+const request = require('../utils/request')
+const generate = require('../utils/generate')
 
 test("Should get posts", async function () {
   const baths1 = await bathsService.saveBath({ 
@@ -38,10 +35,7 @@ test("Should get posts", async function () {
     price: generate(),
   })
 
-  const response = await axios({
-    url: 'http://localhost:3000/baths',
-    method: 'get'
-  })
+  const response = await request('http://localhost:3000/baths','get')
 
   const baths = response.data
 
@@ -50,5 +44,28 @@ test("Should get posts", async function () {
   await bathsService.deleteBath(baths1.id)
   await bathsService.deleteBath(baths2.id)
   await bathsService.deleteBath(baths3.id)
+
+} )
+
+test("Should save posts", async function () {
+  const data = {    
+    name: generate(),
+    contact: generate(),
+    image: generate(),
+    namebath: generate(),
+    herbs: [generate()],
+    atuation: generate(),
+    quantity: 5,
+    price: generate(),
+  }
+
+  const response = await request('http://localhost:3000/baths','post', data)
+
+  const bath = response.data
+
+  expect(bath.title).toBe(data.title)
+  expect(bath.content).toBe(data.content)
+
+  await bathsService.deleteBath(bath.id)
 
 } )

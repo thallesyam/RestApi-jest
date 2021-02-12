@@ -14,7 +14,11 @@ router.get('/baths/:id', async (req, res) => {
 })
 
 router.post('/baths', async (req, res) => {
+   const bath = req.body
+   
+   const newBath = await bathsService.saveBath(bath)
 
+   res.json(newBath)
 })
 
 router.put('/baths/:id', async (req, res) => {

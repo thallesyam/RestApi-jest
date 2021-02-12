@@ -14,7 +14,11 @@ router.get('/plants/:id', async (req, res) => {
 })
 
 router.post('/plants', async (req, res) => {
+   const plant = req.body
+   
+   const newPlant = await plantsService.savePlant(plant)
 
+   res.json(newPlant)
 })
 
 router.put('/plants/:id', async (req, res) => {

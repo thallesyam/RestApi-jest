@@ -14,7 +14,11 @@ router.get('/necklaces/:id', async (req, res) => {
 })
 
 router.post('/necklaces', async (req, res) => {
+   const necklace = req.body
+   
+   const newNecklace = await necklacesService.saveNecklaces(necklace)
 
+   res.json(newNecklace)
 })
 
 router.put('/necklaces/:id', async (req, res) => {
